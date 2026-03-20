@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>CampusConnect | Premium Student Marketplace</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Poppins', 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo i { color: #2a5298; font-size: 1.8rem; }
+
+    .nav-links {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 0.5rem 0.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn:hover {
+      background: rgba(42, 82, 152, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .auth-badge {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .auth-badge:hover {
+      transform: scale(1.05);
+    }
+
+    .currency-selector {
+      background: #f0f2f5;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .currency-selector select {
+      background: transparent;
+      border: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* Main Layout */
+    .main-layout {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .sidebar-left, .sidebar-right {
+      width: 280px;
+      flex-shrink: 0;
+    }
+
+    .main-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    /* Ad Cards */
+    .ad-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .ad-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .ad-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .ad-content {
+      padding: 0.8rem;
+    }
+
+    /* Search & Filter */
+    .search-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: white;
+      margin-bottom: 1.5rem;
+      border-radius: 50px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 2;
+      display: flex;
+      background: #f1f3f5;
+      border-radius: 50px;
+      padding: 0.4rem 1rem;
+      align-items: center;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 0.6rem;
+      outline: none;
+    }
+
+    .search-box button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #2a5298;
+    }
+
+    .category-filter {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      background: #f1f3f5;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-btn.active {
+      background: #2a5298;
+      color: white;
+    }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 1rem;
+    }
+
+    .product-title {
+      font-weight: 700;
+    }
+
+    .price {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #2a5298;
+      margin: 0.5rem 0;
+    }
+
+    .rating {
+      color: #ffb800;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    button.add-cart {
+      background: #1e3c72;
+      border: none;
+      width: 100%;
+      padding: 0.6rem;
+      color: white;
+      font-weight: bold;
+      border-radius: 40px;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button.add-cart:hover {
+      background: #0f2b4f;
+      transform: scale(0.98);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal-content {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 32px;
+      padding: 2rem;
+      animation: slideUp 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    }
+
+    /* Scrollable Admin Modal */
+    .modal-content.admin-scrollable {
+      max-width: 750px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .modal-content.admin-scrollable::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .modal-content.admin-scrollable::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .modal-content.admin-scrollable::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 10px;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Login Panel */
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .login-header .icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .login-header .icon i {
+      font-size: 2rem;
+      color: white;
+    }
+    .login-header h2 {
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      background: #f1f3f5;
+      padding: 0.3rem;
+      border-radius: 60px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 0.7rem;
+      border: none;
+      background: transparent;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+    }
+
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #555;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-gradient {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 40px;
+      font-weight: bold;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Admin Panel */
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-stat-card {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 1rem;
+      border-radius: 20px;
+      text-align: center;
+    }
+    .admin-stat-card .number {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      background: white;
+      padding: 0.5rem 0;
+      z-index: 10;
+    }
+
+    .admin-tab {
+      padding: 0.6rem 1.2rem;
+      background: #f1f3f5;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .admin-tab.active {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .admin-form-group {
+      margin-bottom: 1rem;
+    }
+    .admin-form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .admin-form-group input,
+    .admin-form-group select,
+    .admin-form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+    }
+
+    .ad-item {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 0.8rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .ad-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+    }
+
+    .checkout-btn {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 40px;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checkout-btn:active {
+      transform: scale(0.98);
+    }
+
+    .order-item {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    .user-card {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 20px;
+    }
+
+    .delivery-fee {
+      background: #f8f9fa;
+      padding: 0.8rem;
+      border-radius: 20px;
+      margin: 1rem 0;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar-left, .sidebar-right { width: 100%; }
+      .main-layout { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo"><i class="fas fa-university"></i> CampusConnect</div>
+  <div class="nav-links">
+    <button class="nav-btn" id="homeBtn"><i class="fas fa-store"></i> Shop</button>
+    <button class="nav-btn" id="cartBtn"><i class="fas fa-shopping-cart"></i> Cart (<span id="cartCount">0</span>)</button>
+    <button class="nav-btn" id="ordersBtn"><i class="fas fa-history"></i> Orders</button>
+    <button class="nav-btn" id="profileBtn"><i class="fas fa-user"></i> Profile</button>
+    <button class="nav-btn" id="adminPanelBtn" style="display:none;"><i class="fas fa-user-shield"></i> Admin</button>
+    <div class="currency-selector">
+      <i class="fas fa-coins"></i>
+      <select id="currencySelect">
+        <option value="UGX">🇺🇬 UGX</option>
+        <option value="KES">🇰🇪 KES</option>
+        <option value="USD">🇺🇸 USD</option>
+      </select>
+    </div>
+    <button class="nav-btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+    <span id="userBadge" class="auth-badge"></span>
+  </div>
+</div>
+
+<div class="main-layout">
+  <div class="sidebar-left">
+    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.8rem; border-radius: 20px; margin-bottom: 1rem; text-align: center;">
+      <i class="fas fa-ad"></i> Sponsored
+    </div>
+    <div id="leftAdsContainer"></div>
+  </div>
+
+  <div class="main-content">
+    <div class="search-filter">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search products...">
+        <button id="searchBtn"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="category-filter" id="categoryFilter"></div>
+    </div>
+    <div id="productsContainer" class="products-grid"></div>
+  </div>
+
+  <div class="sidebar-right">
+    <div style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white; padding: 0.8rem; border-radius: 20px; margin-bottom: 1rem; text-align: center;">
+      <i class="fas fa-bullhorn"></i> Advertisement
+    </div>
+    <div id="rightAdsContainer"></div>
+    <button id="advertiseBtn" class="nav-btn" style="background: #ff9800; color: white; width: 100%; margin-top: 1rem;">
+      <i class="fas fa-dollar-sign"></i> Advertise With Us
+    </button>
+  </div>
+</div>
+
+<!-- Premium Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <div class="login-header">
+      <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+      <h2>Welcome Back</h2>
+      <p style="color: #666; margin-top: 0.5rem;">Sign in to your CampusConnect account</p>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-auth-tab="login">Login</button>
+      <button class="auth-tab" data-auth-tab="register">Register</button>
+    </div>
+    <div id="loginTab">
+      <div class="input-group">
+        <label><i class="fas fa-user"></i> Username</label>
+        <input type="text" id="loginUsername" placeholder="Enter your username">
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-lock"></i> Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password">
+      </div>
+      <button id="doLoginBtn" class="btn-gradient">Sign In</button>
+      <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: #999;">Demo: user / user123 | admin / ******</p>
+    </div>
+    <div id="registerTab" style="display:none">
+      <div class="input-group"><input type="text" id="regFullname" placeholder="Full Name"></div>
+      <div class="input-group"><input type="text" id="regUsername" placeholder="Username"></div>
+      <div class="input-group"><input type="email" id="regEmail" placeholder="Email"></div>
+      <div class="input-group"><input type="password" id="regPassword" placeholder="Password"></div>
+      <div class="input-group"><input type="text" id="regPhone" placeholder="Phone Number"></div>
+      <button id="doRegisterBtn" class="btn-gradient">Create Account</button>
+    </div>
+    <button id="closeLoginBtn" class="nav-btn" style="margin-top: 1rem; width: 100%;">Cancel</button>
+  </div>
+</div>
+
+<!-- Premium Admin Modal - Scrollable -->
+<div id="adminModal" class="modal">
+  <div class="modal-content admin-scrollable">
+    <div class="login-header">
+      <div class="icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);"><i class="fas fa-user-shield"></i></div>
+      <h2>Admin Dashboard</h2>
+      <p style="color: #666; font-size: 0.8rem;">Restricted Access</p>
+    </div>
+    <div id="adminLoginSection">
+      <div class="input-group">
+        <label><i class="fas fa-lock"></i> Admin Password</label>
+        <input type="password" id="adminPassword" placeholder="Enter admin password">
+      </div>
+      <button id="verifyAdminBtn" class="btn-gradient">🔐 Access Dashboard</button>
+    </div>
+    <div id="adminControls" style="display:none">
+      <div class="admin-stats-grid">
+        <div class="admin-stat-card"><div class="number" id="statTotalProducts">0</div><div>Products</div></div>
+        <div class="admin-stat-card"><div class="number" id="statTotalUsers">0</div><div>Users</div></div>
+        <div class="admin-stat-card"><div class="number" id="statTotalAds">0</div><div>Ads</div></div>
+        <div class="admin-stat-card"><div class="number" id="statTotalOrders">0</div><div>Orders</div></div>
+      </div>
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="add">➕ Add Product</button>
+        <button class="admin-tab" data-tab="ads">📢 Manage Ads</button>
+        <button class="admin-tab" data-tab="users">👥 Users</button>
+        <button class="admin-tab" data-tab="stats">📊 Stats</button>
+      </div>
+      <div id="addProductTab">
+        <div class="admin-form-group"><input type="text" id="prodName" placeholder="Product Name"></div>
+        <div class="admin-form-group"><input type="number" id="prodPrice" placeholder="Price (UGX)"></div>
+        <div class="admin-form-group"><select id="prodCategory"></select></div>
+        <div class="admin-form-group"><textarea id="prodDesc" rows="3" placeholder="Description"></textarea></div>
+        <div class="admin-form-group"><input type="file" id="prodImage" accept="image/*"></div>
+        <button id="addProductBtn" class="btn-gradient">✨ Add Product</button>
+      </div>
+      <div id="adsTab" style="display:none">
+        <h4>Add New Advertisement</h4>
+        <div class="admin-form-group"><input type="text" id="adTitle" placeholder="Ad Title"></div>
+        <div class="admin-form-group"><input type="url" id="adLink" placeholder="Link URL"></div>
+        <div class="admin-form-group"><select id="adPosition"><option value="left">Left Sidebar</option><option value="right">Right Sidebar</option></select></div>
+        <div class="admin-form-group"><input type="file" id="adImage" accept="image/*"></div>
+        <div class="admin-form-group"><input type="number" id="adPayment" placeholder="Payment (UGX)"></div>
+        <button id="addAdBtn" class="btn-gradient">Add Advertisement</button>
+        <hr style="margin: 1rem 0">
+        <h4>Current Ads</h4>
+        <div id="adminAdsList"></div>
+      </div>
+      <div id="usersTab" style="display:none"><div id="adminUsersList"></div></div>
+      <div id="statsTab" style="display:none"><div id="adminStatsDetail"></div></div>
+    </div>
+    <button id="closeAdminBtn" class="nav-btn" style="margin-top: 1rem; width: 100%;">Close</button>
+  </div>
+</div>
+
+<!-- Cart Modal -->
+<div id="cartModal" class="modal">
+  <div class="modal-content">
+    <h2><i class="fas fa-shopping-cart"></i> Your Cart</h2>
+    <div id="cartItemsList"></div>
+    <div class="delivery-fee">
+      <label><i class="fas fa-truck"></i> Delivery: </label>
+      <select id="deliveryOption">
+        <option value="0">🏃‍♂️ Pickup (Free)</option>
+        <option value="2000">🚚 Standard Delivery - UGX 2,000</option>
+      </select>
+    </div>
+    <div><strong>Total: <span id="cartTotal">0</span></strong></div>
+    <button class="checkout-btn" id="checkoutWhatsAppBtn"><i class="fab fa-whatsapp"></i> Checkout via WhatsApp</button>
+    <button class="nav-btn" id="closeCartBtn" style="margin-top: 1rem; width: 100%;">Close</button>
+  </div>
+</div>
+
+<!-- Orders Modal -->
+<div id="ordersModal" class="modal">
+  <div class="modal-content">
+    <h2><i class="fas fa-history"></i> My Orders</h2>
+    <div id="ordersList"></div>
+    <button class="nav-btn" id="closeOrdersBtn">Close</button>
+  </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <h2><i class="fas fa-user-circle"></i> My Account</h2>
+    <div id="profileInfo"></div>
+    <button id="logoutBtn" class="btn-gradient" style="background: #dc3545; margin-top: 1rem;">Logout</button>
+    <button id="closeProfileBtn" class="nav-btn" style="margin-top: 0.5rem; width: 100%;">Close</button>
+  </div>
+</div>
+
+<!-- Advertise Modal -->
+<div id="advertiseModal" class="modal">
+  <div class="modal-content">
+    <h2><i class="fas fa-ad"></i> Advertise With Us</h2>
+    <div class="input-group"><input type="text" id="userAdTitle" placeholder="Company Name"></div>
+    <div class="input-group"><input type="url" id="userAdLink" placeholder="Website Link"></div>
+    <div class="input-group"><input type="file" id="userAdImage" accept="image/*"></div>
+    <div class="input-group"><select id="userAdPosition"><option value="left">Left Sidebar</option><option value="right">Right Sidebar</option></select></div>
+    <div class="input-group"><input type="number" id="userAdPayment" placeholder="Payment Amount (UGX)"></div>
+    <button id="submitAdRequestBtn" class="btn-gradient" style="background:#ff9800;">Submit & Pay via WhatsApp</button>
+    <button id="closeAdvertiseBtn" class="nav-btn" style="margin-top: 0.5rem;">Cancel</button>
+  </div>
+</div>
+
+<!-- Rating Modal -->
+<div id="ratingModal" class="modal">
+  <div class="modal-content">
+    <h3><i class="fas fa-star"></i> Rate Product</h3>
+    <div id="ratingProductName" style="margin:1rem 0"></div>
+    <div class="rating-stars" style="display:flex; gap:0.5rem; justify-content:center; margin:1rem 0">
+      <i class="fas fa-star" data-rating="1" style="font-size:2rem; cursor:pointer; color:#ddd"></i>
+      <i class="fas fa-star" data-rating="2" style="font-size:2rem; cursor:pointer; color:#ddd"></i>
+      <i class="fas fa-star" data-rating="3" style="font-size:2rem; cursor:pointer; color:#ddd"></i>
+      <i class="fas fa-star" data-rating="4" style="font-size:2rem; cursor:pointer; color:#ddd"></i>
+      <i class="fas fa-star" data-rating="5" style="font-size:2rem; cursor:pointer; color:#ddd"></i>
+    </div>
+    <button id="closeRatingBtn" class="nav-btn">Cancel</button>
+  </div>
+</div>
+
+<script>
+  // Data
+  let products = [], categories = ["Electronics", "Clothing", "Books", "Food", "Stationery", "Accessories"];
+  let users = [], currentUser = null, cart = [], orders = [], advertisements = [];
+  let currentCurrency = "UGX", currentCategory = "all", currentSearch = "", selectedProductForRating = null;
+  const ADMIN_PASSWORD = "Ab-214365";
+  const ADMIN_EMAIL = "campusconnect@gmail.com";
+  const exchangeRates = { UGX: 3700, KES: 130, USD: 1 };
+
+  function formatPrice(priceInUGX) {
+    let converted = priceInUGX, symbol = "";
+    if (currentCurrency === "UGX") { converted = priceInUGX; symbol = "UGX "; }
+    else if (currentCurrency === "KES") { converted = Math.round(priceInUGX / (exchangeRates.UGX / exchangeRates.KES)); symbol = "KES "; }
+    else if (currentCurrency === "USD") { converted = (priceInUGX / exchangeRates.UGX).toFixed(2); symbol = "$"; }
+    return `${symbol}${converted.toLocaleString()}`;
+  }
+
+  // Email sending function using mailto (opens user's email client)
+  function sendEmailToAllUsers(productName, productPrice, productCategory, productDescription, productImageUrl) {
+    const emailList = users.filter(u => u.email && u.role !== "admin").map(u => u.email);
+    if (emailList.length === 0) {
+      console.log("No user emails found");
+      return;
+    }
+    
+    const subject = `🎉 New Product Alert: ${productName} on CampusConnect!`;
+    const body = `
+Hello CampusConnect User,
+
+A new exciting product has been added to our marketplace!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PRODUCT DETAILS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ Product: ${productName}
+🏷️ Category: ${productCategory}
+💰 Price: UGX ${productPrice.toLocaleString()}
+📝 Description: ${productDescription || "No description provided"}
+
+🖼️ Product Image: ${productImageUrl}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛒 Don't miss out! Visit CampusConnect now to order this amazing product.
+
+🌐 Shop now: https://campusconnect.com
+
+Thank you for shopping with us!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CampusConnect Team
+${ADMIN_EMAIL}
+    `;
+    
+    // Open email client for each user (this will open multiple tabs - limited by browser)
+    // For better UX, we'll open one consolidated email with BCC
+    const bccEmails = emailList.join(',');
+    const mailtoLink = `mailto:?bcc=${encodeURIComponent(bccEmails)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client
+    window.open(mailtoLink, '_blank');
+    
+    // Store notification in localStorage
+    const notifications = JSON.parse(localStorage.getItem("campus_notifications") || "[]");
+    notifications.unshift({ 
+      id: Date.now(), 
+      product: productName, 
+      recipients: emailList.length, 
+      date: new Date().toLocaleString(),
+      sent: true 
+    });
+    localStorage.setItem("campus_notifications", JSON.stringify(notifications));
+    
+    if (currentUser?.role === "admin") {
+      setTimeout(() => alert(`📧 Email notification opened for ${emailList.length} users about "${productName}". Please send the email from your email client.`), 500);
+    }
+  }
+
+  function loadData() {
+    const storedProducts = localStorage.getItem("campus_products");
+    if (storedProducts) products = JSON.parse(storedProducts);
+    else products = [
+      { id: "1", name: "Wireless Headphones", price: 25000, category: "Electronics", description: "Noise cancelling headphones", image: "https://picsum.photos/id/1/400/300", ratings: [], avgRating: 4.5 },
+      { id: "2", name: "Campus Hoodie", price: 35000, category: "Clothing", description: "Comfortable cotton hoodie", image: "https://picsum.photos/id/20/400/300", ratings: [], avgRating: 4.0 },
+      { id: "3", name: "Python Book", price: 18000, category: "Books", description: "Learn Python programming", image: "https://picsum.photos/id/24/400/300", ratings: [], avgRating: 5.0 }
+    ];
+    const storedCategories = localStorage.getItem("campus_categories");
+    if (storedCategories) categories = JSON.parse(storedCategories);
+    const storedUsers = localStorage.getItem("campus_users");
+    if (storedUsers) users = JSON.parse(storedUsers);
+    else users = [{ id: "admin1", username: "admin", password: ADMIN_PASSWORD, fullname: "Administrator", email: "admin@campus.com", role: "admin", createdAt: new Date().toISOString() }];
+    const storedAds = localStorage.getItem("campus_ads");
+    if (storedAds) advertisements = JSON.parse(storedAds);
+    else advertisements = [
+      { id: "ad1", title: "Student Discount 20%!", link: "https://example.com", image: "https://picsum.photos/id/26/300/200", position: "left", active: true },
+      { id: "ad2", title: "Campus Cafeteria", link: "https://example.com", image: "https://picsum.photos/id/30/300/200", position: "right", active: true }
+    ];
+    cart = JSON.parse(localStorage.getItem("campus_cart") || "[]");
+    orders = JSON.parse(localStorage.getItem("campus_orders") || "[]");
+    const storedUser = localStorage.getItem("campus_user");
+    if (storedUser) currentUser = JSON.parse(storedUser);
+  }
+
+  function saveProducts() { localStorage.setItem("campus_products", JSON.stringify(products)); }
+  function saveCategories() { localStorage.setItem("campus_categories", JSON.stringify(categories)); }
+  function saveUsers() { localStorage.setItem("campus_users", JSON.stringify(users)); }
+  function saveAds() { localStorage.setItem("campus_ads", JSON.stringify(advertisements)); }
+  function saveCart() { localStorage.setItem("campus_cart", JSON.stringify(cart)); updateCartCount(); }
+  function saveOrders() { localStorage.setItem("campus_orders", JSON.stringify(orders)); }
+  function saveCurrentUser() { localStorage.setItem("campus_user", JSON.stringify(currentUser)); }
+  function updateCartCount() { document.getElementById("cartCount").innerText = cart.reduce((s, i) => s + i.quantity, 0); }
+  
+  function updateUI() {
+    const badge = document.getElementById("userBadge"), adminBtn = document.getElementById("adminPanelBtn");
+    if (currentUser) {
+      badge.innerText = `👤 ${currentUser.username} (${currentUser.role})`;
+      document.getElementById("loginBtn").style.display = "none";
+      adminBtn.style.display = currentUser.role === "admin" ? "flex" : "none";
+    } else {
+      badge.innerText = "";
+      document.getElementById("loginBtn").style.display = "flex";
+      adminBtn.style.display = "none";
+    }
+  }
+
+  function renderAds() {
+    const leftAds = advertisements.filter(ad => ad.position === "left" && ad.active);
+    const rightAds = advertisements.filter(ad => ad.position === "right" && ad.active);
+    document.getElementById("leftAdsContainer").innerHTML = leftAds.map(ad => `<div class="ad-card" onclick="window.open('${ad.link}', '_blank')"><img class="ad-image" src="${ad.image}" onerror="this.src='https://picsum.photos/id/42/300/200'"><div class="ad-content"><strong>${ad.title}</strong><div style="font-size:0.7rem; color:#667eea;">Sponsored</div></div></div>`).join("");
+    document.getElementById("rightAdsContainer").innerHTML = rightAds.map(ad => `<div class="ad-card" onclick="window.open('${ad.link}', '_blank')"><img class="ad-image" src="${ad.image}" onerror="this.src='https://picsum.photos/id/42/300/200'"><div class="ad-content"><strong>${ad.title}</strong><div style="font-size:0.7rem; color:#f5576c;">Advertisement</div></div></div>`).join("");
+  }
+
+  function renderProducts() {
+    let filtered = products.filter(p => (currentCategory === "all" || p.category === currentCategory) && p.name.toLowerCase().includes(currentSearch.toLowerCase()));
+    const container = document.getElementById("productsContainer");
+    if (filtered.length === 0) { container.innerHTML = "<div style='text-align:center; padding:2rem'>No products</div>"; return; }
+    container.innerHTML = filtered.map(p => {
+      const rating = p.avgRating || 0;
+      const stars = "★".repeat(Math.floor(rating)) + "☆".repeat(5 - Math.floor(rating));
+      return `<div class="product-card"><img class="product-img" src="${p.image}" onclick="window.open('${p.image}','_blank')"><div class="product-info"><div class="product-title">${p.name}</div><div class="price">${formatPrice(p.price)}</div><div class="rating" onclick="openRatingModal('${p.id}')">${stars} (${p.ratings.length})</div><button class="add-cart" data-id="${p.id}">Add to Cart</button></div></div>`;
+    }).join("");
+    document.querySelectorAll(".add-cart").forEach(btn => btn.addEventListener("click", () => addToCart(btn.dataset.id)));
+  }
+
+  function addToCart(id) {
+    if (!currentUser) { alert("Please login"); document.getElementById("loginModal").style.display = "flex"; return; }
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    const existing = cart.find(i => i.id === id);
+    if (existing) existing.quantity++;
+    else cart.push({ id, name: product.name, price: product.price, quantity: 1 });
+    saveCart();
+    alert(`${product.name} added to cart!`);
+  }
+
+  function checkoutViaWhatsApp() {
+    if (!currentUser) { alert("Please login"); return; }
+    if (cart.length === 0) { alert("Cart empty"); return; }
+    const fee = parseInt(document.getElementById("deliveryOption").value);
+    const subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+    const total = subtotal + fee;
+    let items = cart.map(i => `${i.name} x${i.quantity} = ${formatPrice(i.price * i.quantity)}`).join("\n");
+    let msg = `🛍️ ORDER\n👤 ${currentUser.fullname || currentUser.username}\n📞 ${currentUser.phone || "N/A"}\n${items}\n🚚 Delivery: ${formatPrice(fee)}\n💰 TOTAL: ${formatPrice(total)}`;
+    window.open(`https://wa.me/256745059996?text=${encodeURIComponent(msg)}`, "_blank");
+    orders.unshift({ id: Date.now(), date: new Date().toLocaleString(), items: [...cart], total, user: currentUser.username });
+    saveOrders();
+    cart = [];
+    saveCart();
+    alert("Order placed!");
+    document.getElementById("cartModal").style.display = "none";
+  }
+
+  function renderCartModal() {
+    const cartDiv = document.getElementById("cartItemsList");
+    if (cart.length === 0) { cartDiv.innerHTML = "<p>Cart empty</p>"; return; }
+    cartDiv.innerHTML = cart.map(item => `<div class="cart-item"><div>${item.name} x${item.quantity}</div><div>${formatPrice(item.price * item.quantity)} <button onclick="removeFromCart('${item.id}')">Remove</button></div></div>`).join("");
+    const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+    document.getElementById("cartTotal").innerHTML = formatPrice(total);
+  }
+  
+  window.removeFromCart = function(id) { cart = cart.filter(i => i.id !== id); saveCart(); renderCartModal(); updateCartCount(); };
+  
+  function renderOrders() { document.getElementById("ordersList").innerHTML = orders.filter(o => o.user === currentUser?.username).map(o => `<div class="order-item"><strong>${o.date}</strong><br>Items: ${o.items.map(i => `${i.name} x${i.quantity}`).join(", ")}<br>Total: ${formatPrice(o.total)}</div>`).join("") || "<p>No orders</p>"; }
+  
+  function renderProfile() { document.getElementById("profileInfo").innerHTML = `<div class="user-card"><strong>${currentUser.fullname || currentUser.username}</strong><br>Username: ${currentUser.username}<br>Email: ${currentUser.email || "Not set"}<br>Phone: ${currentUser.phone || "Not set"}<br>Role: ${currentUser.role}</div>`; }
+  
+  function openRatingModal(id) { if (!currentUser) { alert("Login to rate"); document.getElementById("loginModal").style.display = "flex"; return; } selectedProductForRating = products.find(p => p.id === id); if (selectedProductForRating) { document.getElementById("ratingProductName").innerText = selectedProductForRating.name; document.getElementById("ratingModal").style.display = "flex"; } }
+  
+  function submitRating(rating) { if (selectedProductForRating) { selectedProductForRating.ratings.push(rating); selectedProductForRating.avgRating = selectedProductForRating.ratings.reduce((a,b) => a + b, 0) / selectedProductForRating.ratings.length; saveProducts(); renderProducts(); document.getElementById("ratingModal").style.display = "none"; } }
+
+  // Admin Functions
+  function addProduct() {
+    const name = document.getElementById("prodName").value, price = parseFloat(document.getElementById("prodPrice").value), category = document.getElementById("prodCategory").value, desc = document.getElementById("prodDesc").value, file = document.getElementById("prodImage").files[0];
+    if (!name || !price) { alert("Name and price required"); return; }
+    const newProduct = { id: Date.now().toString(), name, price, category, description: desc, image: "https://picsum.photos/id/42/400/300", ratings: [], avgRating: 0 };
+    const addToProducts = (imgUrl) => { 
+      newProduct.image = imgUrl; 
+      products.push(newProduct); 
+      saveProducts(); 
+      renderProducts(); 
+      renderAdminProductsList(); 
+      updateAdminStats(); 
+      // Send email to all users
+      sendEmailToAllUsers(name, price, category, desc, imgUrl);
+      alert("Product added! Email notification will open in your email client. Please send it to all users."); 
+    };
+    if (file) { const reader = new FileReader(); reader.onload = (e) => addToProducts(e.target.result); reader.readAsDataURL(file); } else addToProducts(newProduct.image);
+  }
+
+  function addAdvertisement() {
+    const title = document.getElementById("adTitle").value, link = document.getElementById("adLink").value, position = document.getElementById("adPosition").value, file = document.getElementById("adImage").files[0], payment = document.getElementById("adPayment").value;
+    if (!title || !link) { alert("Title and link required"); return; }
+    const newAd = { id: Date.now().toString(), title, link, position, active: true, payment: payment || 0 };
+    if (file) { const reader = new FileReader(); reader.onload = (e) => { newAd.image = e.target.result; advertisements.push(newAd); saveAds(); renderAds(); renderAdminAdsList(); updateAdminStats(); alert("Ad added!"); }; reader.readAsDataURL(file); }
+    else { newAd.image = "https://picsum.photos/id/42/300/200"; advertisements.push(newAd); saveAds(); renderAds(); renderAdminAdsList(); updateAdminStats(); alert("Ad added!"); }
+  }
+
+  function renderAdminProductsList() { const container = document.getElementById("adminProductsList"); if (container) container.innerHTML = products.map(p => `<div class="ad-item"><img src="${p.image}"><div><strong>${p.name}</strong><br>UGX ${p.price}</div><button onclick="deleteProduct('${p.id}')" style="background:#dc3545; color:white; padding:0.3rem 0.8rem; border-radius:20px;">Delete</button></div>`).join(""); }
+  window.deleteProduct = function(id) { if (confirm("Delete?")) { products = products.filter(p => p.id !== id); saveProducts(); renderProducts(); renderAdminProductsList(); updateAdminStats(); alert("Deleted"); } };
+  function renderAdminAdsList() { const container = document.getElementById("adminAdsList"); if (container) container.innerHTML = advertisements.map(ad => `<div class="ad-item"><img src="${ad.image}"><div><strong>${ad.title}</strong><br>${ad.position} | UGX ${ad.payment || 0}</div><button onclick="deleteAd('${ad.id}')" style="background:#dc3545; color:white; padding:0.3rem 0.8rem; border-radius:20px;">Delete</button></div>`).join(""); }
+  window.deleteAd = function(id) { if (confirm("Delete ad?")) { advertisements = advertisements.filter(ad => ad.id !== id); saveAds(); renderAds(); renderAdminAdsList(); updateAdminStats(); alert("Deleted"); } };
+  function renderAdminUsersList() { const container = document.getElementById("adminUsersList"); if (container) container.innerHTML = users.map(u => `<div class="ad-item"><div><strong>${u.fullname || u.username}</strong><br>${u.email || "No email"}<br>Role: ${u.role}</div>${u.role !== "admin" ? `<button onclick="deleteUser('${u.id}')" style="background:#dc3545; color:white; padding:0.3rem 0.8rem; border-radius:20px;">Delete</button>` : "<span style='color:#667eea'>Admin</span>"}</div>`).join(""); }
+  window.deleteUser = function(id) { if (confirm("Delete user?")) { users = users.filter(u => u.id !== id); saveUsers(); renderAdminUsersList(); updateAdminStats(); alert("Deleted"); } };
+  function updateAdminStats() { document.getElementById("statTotalProducts").innerText = products.length; document.getElementById("statTotalUsers").innerText = users.length; document.getElementById("statTotalAds").innerText = advertisements.length; document.getElementById("statTotalOrders").innerText = orders.length; }
+  
+  function renderCategoriesFilter() {
+    const filterDiv = document.getElementById("categoryFilter");
+    filterDiv.innerHTML = `<button class="cat-btn ${currentCategory === 'all' ? 'active' : ''}" data-cat="all">All</button>` + categories.map(cat => `<button class="cat-btn ${currentCategory === cat ? 'active' : ''}" data-cat="${cat}">${cat}</button>`).join("");
+    document.querySelectorAll(".cat-btn").forEach(btn => btn.addEventListener("click", () => { currentCategory = btn.dataset.cat; renderCategoriesFilter(); renderProducts(); }));
+    const catSelect = document.getElementById("prodCategory");
+    if (catSelect) catSelect.innerHTML = categories.map(cat => `<option value="${cat}">${cat}</option>`).join("");
+  }
+
+  // Event Listeners
+  document.getElementById("homeBtn").onclick = () => { currentCategory = "all"; currentSearch = ""; document.getElementById("searchInput").value = ""; renderProducts(); };
+  document.getElementById("cartBtn").onclick = () => { renderCartModal(); document.getElementById("cartModal").style.display = "flex"; };
+  document.getElementById("ordersBtn").onclick = () => { if(currentUser) { renderOrders(); document.getElementById("ordersModal").style.display = "flex"; } else alert("Please login"); };
+  document.getElementById("profileBtn").onclick = () => { if(currentUser) { renderProfile(); document.getElementById("profileModal").style.display = "flex"; } else alert("Please login"); };
+  document.getElementById("adminPanelBtn").onclick = () => { document.getElementById("adminModal").style.display = "flex"; };
+  document.getElementById("loginBtn").onclick = () => { document.getElementById("loginModal").style.display = "flex"; };
+  document.getElementById("advertiseBtn").onclick = () => { document.getElementById("advertiseModal").style.display = "flex"; };
+  document.getElementById("submitAdRequestBtn").onclick = () => { let msg = `📢 AD REQUEST\nCompany: ${document.getElementById("userAdTitle").value}\nLink: ${document.getElementById("userAdLink").value}\nPosition: ${document.getElementById("userAdPosition").value}\nPayment: UGX ${document.getElementById("userAdPayment").value}`; window.open(`https://wa.me/256745059996?text=${encodeURIComponent(msg)}`, "_blank"); alert("Request sent!"); document.getElementById("advertiseModal").style.display = "none"; };
+  document.getElementById("closeAdvertiseBtn").onclick = () => { document.getElementById("advertiseModal").style.display = "none"; };
+  document.getElementById("closeCartBtn").onclick = () => { document.getElementById("cartModal").style.display = "none"; };
+  document.getElementById("closeOrdersBtn").onclick = () => { document.getElementById("ordersModal").style.display = "none"; };
+  document.getElementById("closeProfileBtn").onclick = () => { document.getElementById("profileModal").style.display = "none"; };
+  document.getElementById("closeAdminBtn").onclick = () => { document.getElementById("adminModal").style.display = "none"; };
+  document.getElementById("closeLoginBtn").onclick = () => { document.getElementById("loginModal").style.display = "none"; };
+  document.getElementById("closeRatingBtn").onclick = () => { document.getElementById("ratingModal").style.display = "none"; };
+  document.getElementById("checkoutWhatsAppBtn").onclick = checkoutViaWhatsApp;
+  document.getElementById("searchBtn").onclick = () => { currentSearch = document.getElementById("searchInput").value; renderProducts(); };
+  document.getElementById("searchInput").addEventListener("keyup", (e) => { if(e.key === "Enter") { currentSearch = e.target.value; renderProducts(); } });
+  document.getElementById("currencySelect").onchange = (e) => { currentCurrency = e.target.value; renderProducts(); if (document.getElementById("cartModal").style.display === "flex") renderCartModal(); };
+  document.getElementById("addProductBtn").onclick = addProduct;
+  document.getElementById("addAdBtn").onclick = addAdvertisement;
+  
+  document.getElementById("logoutBtn").onclick = () => { 
+    currentUser = null; 
+    saveCurrentUser(); 
+    updateUI(); 
+    renderProducts(); 
+    document.getElementById("profileModal").style.display = "none"; 
+    alert("Logged out successfully!");
+  };
+  
+  document.getElementById("verifyAdminBtn").onclick = () => { 
+    const enteredPass = document.getElementById("adminPassword").value;
+    if (enteredPass === ADMIN_PASSWORD && currentUser?.role === "admin") { 
+      document.getElementById("adminControls").style.display = "block"; 
+      document.getElementById("adminLoginSection").style.display = "none"; 
+      renderAdminProductsList(); 
+      renderAdminAdsList(); 
+      renderAdminUsersList(); 
+      updateAdminStats(); 
+    } else if (enteredPass === ADMIN_PASSWORD) { 
+      alert("You must be logged in as admin first. Please login with admin account."); 
+    } else { 
+      alert("Wrong password. Access denied."); 
+    } 
+  };
+  
+  document.getElementById("doLoginBtn").onclick = () => { 
+    const user = users.find(u => u.username === document.getElementById("loginUsername").value && u.password === document.getElementById("loginPassword").value); 
+    if (user) { currentUser = user; saveCurrentUser(); updateUI(); document.getElementById("loginModal").style.display = "none"; renderProducts(); alert(`Welcome ${user.fullname || user.username}`); } 
+    else alert("Invalid credentials"); 
+  };
+  
+  document.getElementById("doRegisterBtn").onclick = () => { 
+    if (users.find(u => u.username === document.getElementById("regUsername").value)) { alert("Username exists"); return; } 
+    const newUser = { id: Date.now().toString(), username: document.getElementById("regUsername").value, password: document.getElementById("regPassword").value, fullname: document.getElementById("regFullname").value, email: document.getElementById("regEmail").value, phone: document.getElementById("regPhone").value, role: "user", createdAt: new Date().toISOString() }; 
+    users.push(newUser); saveUsers(); currentUser = newUser; saveCurrentUser(); updateUI(); document.getElementById("loginModal").style.display = "none"; alert("Account created!"); renderProducts(); 
+  };
+  
+  document.querySelectorAll(".admin-tab").forEach(tab => tab.addEventListener("click", () => { 
+    document.querySelectorAll(".admin-tab").forEach(t => t.classList.remove("active")); 
+    tab.classList.add("active"); 
+    document.getElementById("addProductTab").style.display = tab.dataset.tab === "add" ? "block" : "none"; 
+    document.getElementById("adsTab").style.display = tab.dataset.tab === "ads" ? "block" : "none"; 
+    document.getElementById("usersTab").style.display = tab.dataset.tab === "users" ? "block" : "none"; 
+    document.getElementById("statsTab").style.display = tab.dataset.tab === "stats" ? "block" : "none"; 
+    if (tab.dataset.tab === "ads") renderAdminAdsList(); 
+    if (tab.dataset.tab === "users") renderAdminUsersList(); 
+  }));
+  
+  document.querySelectorAll(".auth-tab").forEach(tab => tab.addEventListener("click", () => { 
+    document.querySelectorAll(".auth-tab").forEach(t => t.classList.remove("active")); 
+    tab.classList.add("active"); 
+    document.getElementById("loginTab").style.display = tab.dataset.authTab === "login" ? "block" : "none"; 
+    document.getElementById("registerTab").style.display = tab.dataset.authTab === "register" ? "block" : "none"; 
+  }));
+  
+  document.getElementById("prodImage").addEventListener("change", (e) => { if(e.target.files[0]) { const reader = new FileReader(); reader.onload = function(ev) { document.getElementById("adminImagePreview").style.display = "block"; document.getElementById("adminPreviewImg").src = ev.target.result; }; reader.readAsDataURL(e.target.files[0]); } });
+  document.querySelectorAll("#ratingModal .rating-stars i").forEach(star => star.addEventListener("click", () => submitRating(parseInt(star.dataset.rating))));
+  
+  function init() { loadData(); updateUI(); renderCategoriesFilter(); renderProducts(); renderAds(); updateCartCount(); }
+  init();
+</script>
+</body>
+</html>
